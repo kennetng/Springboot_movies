@@ -1,25 +1,33 @@
 package com.qtime.movies.controller;
 
-import com.qtime.movies.repository.MovieRepository;
+import com.qtime.movies.service.MovieService;
 import com.qtime.movies.model.Movie;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class MovieController {
 
-    @AutoWired
-    private MovieRepository movieRepository;
+    @Autowired
+    MovieService movieService;
 
     @GetMapping("/movies")
-    public List<Movie> getAllUsers() {
-        return movieRepository.findAll();
+    public List getAllMovies() {
+        return movieService.getAllMovies();
     }
 
-    // Get movie by id
-    @PutMapping("/users/{id}")
-    public ResponseEntity<Movie> getMoviesById(@PathVariable(value = "id") Long movieId) throws ResourceNotFoundException {
-        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new ResourceNotFoundException("Movie not found on :: " + movieId));
-
+    @GetMapping("/movies/{id}")
+    public Movie getMovie(@PathVariable String movieId) {
+        return movieService.getMovie(movieId);
     }
+
+    @PostMapping("/movies")
+    public void addMovie(@RequestBody Movie movie) {
+        movieService.addMovie(movie);
+    }
+
 }
