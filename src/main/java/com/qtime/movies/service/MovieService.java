@@ -1,5 +1,6 @@
 package com.qtime.movies.service;
 
+import com.qtime.movies.model.Genre;
 import com.qtime.movies.model.Movie;
 import com.qtime.movies.repository.MovieRepository;
 
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MovieService {
@@ -17,25 +17,32 @@ public class MovieService {
     private MovieRepository movieRepository;
 
     public List getAllMovies() {
-        List movies = new ArrayList<>();
-        movieRepository.findAll().forEach(movies::add);
-        return movies;
+        return (List) movieRepository.findAll();
     }
 
-    public Movie getMovie(String id) {
+    public Movie getMovieById(long id) {
         return movieRepository.findById(id).orElse(null);
+    }
+
+    public List<Movie> getMoviesBySearch(String searchTerm) {
+        List<Movie> movies = new ArrayList<>();
+        for (Movie movie : movieRepository.findAll()) {
+            if (movie.getTitle().contains(searchTerm)) {
+                movies.add(movie);
+            }
+        }
+        return movies;
     }
 
     public void addMovie(Movie movie) {
         movieRepository.save(movie);
     }
 
-    public void updateMovie(String id, Movie movie) {
+    public void updateMovie(Movie movie) {
         movieRepository.save(movie);
     }
 
-    public void deleteMovie(String id) {
+    public void deleteMovie(long id) {
         movieRepository.deleteById(id);
     }
-
 }

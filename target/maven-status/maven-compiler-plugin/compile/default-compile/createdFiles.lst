@@ -1,0 +1,9 @@
+com/qtime/movies/controller/GenreController.class
+com/qtime/movies/repository/GenreRepository.class
+com/qtime/movies/service/MovieService.class
+com/qtime/movies/service/GenreService.class
+com/qtime/movies/repository/MovieRepository.class
+com/qtime/movies/MoviesApplication.class
+com/qtime/movies/controller/MovieController.class
+com/qtime/movies/model/Genre.class
+com/qtime/movies/model/Movie.class
